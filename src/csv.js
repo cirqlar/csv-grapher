@@ -14,16 +14,27 @@ export async function parse(file, config) {
   const data = results.data;
   const fields = results.meta.fields;
 
-  const formattedResults = {};
+  const formattedResults = {
+    '_labels': [],
+  };
 
-  for (let i = 0; i < data.length; ++i) {
-    for (let j = 0; j < fields.length; ++j) {
-      if (i === 0) {
-        formattedResults[fields[j]] = [ data[i][fields[j]] ]
+  for (let i = 0; i < data.length - 1; i++) {
+    for (let j = 0; j < fields.length; j++) { 
+      if (i === 0 && j !== 0) {
+        formattedResults[fields[j]] = [ data[i][fields[j]] ];
+        continue;
       }
-      formattedResults[fields[j]].push(data[i][fields[j]]);
+      if (j === 0) {
+        formattedResults['_labels'].push(data[i][fields[j]]);
+        continue;
+      }
+      if (i !== 0 && j !== 0) {
+        formattedResults[fields[j]].push(data[i][fields[j]]);
+      }
     }
   }
+
+  formattedResults['_keys'] = fields.splice(1);
 
   return formattedResults;
 }

@@ -1,10 +1,11 @@
 import React from 'react';
+import Graph from './Graph';
 
 function GraphPage(props) {
   return (
     <>
       <button onClick={props.clearData}>Clear Data</button>
-      <pre>{ JSON.stringify(props.data, null, 2) }</pre>
+      <Graph data={props.data} />
     </>
   );
 }
