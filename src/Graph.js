@@ -37,7 +37,8 @@ function Graph(props) {
   let canvas = React.useRef();
 
   React.useEffect(() => {
-    createChart(canvas.current.getContext('2d'), props.data);
+    let graph = createChart(canvas.current.getContext('2d'), props.data);
+    return () => graph.destroy();
   })
 
   return (
