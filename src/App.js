@@ -1,32 +1,18 @@
 import React from 'react';
 
 import FileSelectPage from "./FileSelectPage";
-import GraphPage from './GraphPage';
-import * as csv from './csv';
+import GraphPage from './graph/GraphPage';
+import { useCSVParser } from './shared/csv';
 
 function App() {
-  const [file, setFile] = React.useState();
-  const [data, setData] = React.useState();
-
-  React.useEffect(() => {
-    if (file) {
-      csv.parse(file, { header: true, dynamicTyping: true })
-        .then(results => {
-          setData(results);
-        })
-    }
-  }, [file]);
-
-  function clearData() {
-    setData(null);
-  }
+  const [data, setData] = useCSVParser();
 
   React.useEffect(() => {
     console.log(data);
   }, [data]);
 
   return (
-    data ? <GraphPage data={data} clearData={clearData} /> : <FileSelectPage setFile={setFile} />
+    data ? <GraphPage data={data} clearData={() => setData()} /> : <FileSelectPage submit={setData} />
   )
 }
 
