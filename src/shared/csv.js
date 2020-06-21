@@ -10,7 +10,7 @@ async function papaPromise(file, config) {
   });
 }
 
-function isEmpty(obj) {
+export function isEmpty(obj) {
   for(var key in obj) {
       if(obj.hasOwnProperty(key))
           return false;
@@ -19,31 +19,41 @@ function isEmpty(obj) {
 }
 
 export async function parse(file, config) {
-  const results = await papaPromise(file, config);
+  let { shared: { header, labels } } = config;
+  let pConfig = { ...config.parse, header };
+  const results = await papaPromise(file, pConfig);
   const data = results.data;
-  const fields = results.meta.fields;
+  const fields = (header) ? results.meta.fields : data[0].map((v, index) => index );
 
   const formattedResults = {
     '_labels': [],
-    '_conf': config,
   };
 
   for (let i = 0; i < data.length - 1; i++) {
-    for (let j = 0; j < fields.length; j++) { 
-      if (i === 0 && j !== 0) {
-        formattedResults[fields[j]] = [ data[i][fields[j]] ];
-        continue;
-      }
-      if (j === 0) {
-        formattedResults['_labels'].push(data[i][fields[j]]);
-        continue;
-      }
-      if (i !== 0 && j !== 0) {
-        formattedResults[fields[j]].push(data[i][fields[j]]);
+    for (let j = 0; j < fields.length; j++) {
+      if (labels) {
+        if (i === 0 && j !== 0) {
+          formattedResults[fields[j]] = [ data[i][fields[j]] ];
+          continue;
+        }
+        if (j === 0) {
+          formattedResults['_labels'].push(data[i][fields[j]]);
+          continue;
+        }
+        if (i !== 0 && j !== 0) {
+          formattedResults[fields[j]].push(data[i][fields[j]]);
+        }
+      } else {
+        if (i === 0) {
+          formattedResults[fields[j]] = [ data[i][fields[j]] ];
+          continue;
+        } else {
+          formattedResults[fields[j]].push(data[i][fields[j]]);
+        }
       }
     }
   }
-
+  
   formattedResults['_keys'] = fields.splice(1);
 
   return formattedResults;

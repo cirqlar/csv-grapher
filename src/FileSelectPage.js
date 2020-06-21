@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { updateConfig } from './store/actions/actions'
 
 
-function FileSelectPage({ config, updateConfig }) {
+function FileSelectPage({ config: { parse, chart, shared }, updateConfig }) {
   const fileInput = React.useRef();
 
-  const [header, setHeader] = React.useState(config.header);
-  const [labels, setLabels] = React.useState(config.labels);
+  const [header, setHeader] = React.useState(shared.header);
+  const [labels, setLabels] = React.useState(shared.labels);
   const [changed, setChanged] = React.useState(false);
   const [file, setFile] = React.useState();
 
@@ -17,8 +17,10 @@ function FileSelectPage({ config, updateConfig }) {
       file,
       changed,
       config: {
-        header,
-        labels,
+        shared: {
+          header,
+          labels,
+        }        
       }
     }
     updateConfig(payload);
@@ -31,8 +33,10 @@ function FileSelectPage({ config, updateConfig }) {
       e.preventDefault();
       handleSubmit();
     }}>
-      <input type="checkbox" name="header" checked={header} onChange={e => setHeader(e.target.checked)} />
-      <input type="checkbox" name="labels" checked={labels} onChange={e => setLabels(e.target.checked)} />
+      <label htmlFor="header" >Header</label>
+      <input type="checkbox" name="header" checked={header} onChange={e => { setHeader(e.target.checked); setChanged(true) }} />
+      <label htmlFor="labels" >Labels</label>
+      <input type="checkbox" name="labels" checked={labels} onChange={e => { setLabels(e.target.checked); setChanged(true) }} />
       <input 
         type='file' 
         ref={fileInput} 
