@@ -12,7 +12,10 @@ function App() {
   }, [data]);
 
   return (
-    data ? <GraphPage data={data} clearData={() => setData()} /> : <FileSelectPage submit={setData} />
+    <>
+      <FileSelectPage submit={setData} />
+      { data && <GraphPage data={data} clearData={() => setData()} /> }
+    </>
   )
 }
 
