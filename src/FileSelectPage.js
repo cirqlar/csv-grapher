@@ -34,9 +34,19 @@ function FileSelectPage({ config: { parse, chart, shared }, updateConfig }) {
       handleSubmit();
     }}>
       <label htmlFor="header" >Header</label>
-      <input type="checkbox" name="header" checked={header} onChange={e => { setHeader(e.target.checked); setChanged(true) }} />
+      <input
+        type="checkbox"
+        name="header"
+        checked={header}
+        onChange={e => { setHeader(e.target.checked); setChanged(true) }}
+      />
       <label htmlFor="labels" >Labels</label>
-      <input type="checkbox" name="labels" checked={labels} onChange={e => { setLabels(e.target.checked); setChanged(true) }} />
+      <input
+        type="checkbox"
+        name="labels"
+        checked={labels}
+        onChange={e => { setLabels(e.target.checked); setChanged(true) }}
+      />
       <input 
         type='file' 
         ref={fileInput} 
