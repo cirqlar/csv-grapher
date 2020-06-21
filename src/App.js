@@ -1,32 +1,17 @@
 import React from 'react';
+import { useSelector, shallowEqual } from 'react-redux';
 
-import FileSelectPage from "./FileSelectPage";
-import GraphPage from './GraphPage';
-import * as csv from './csv';
+import FileSelector from "./fileSelector/FileSelector";
+import Graph from './graph/Graph';
 
 function App() {
-  const [file, setFile] = React.useState();
-  const [data, setData] = React.useState();
-
-  React.useEffect(() => {
-    if (file) {
-      csv.parse(file, { header: true, dynamicTyping: true })
-        .then(results => {
-          setData(results);
-        })
-    }
-  }, [file]);
-
-  function clearData() {
-    setData(null);
-  }
-
-  React.useEffect(() => {
-    console.log(data);
-  }, [data]);
+  const data = useSelector((state) => state.data, shallowEqual);
 
   return (
-    data ? <GraphPage data={data} clearData={clearData} /> : <FileSelectPage setFile={setFile} />
+    <>
+      <FileSelector />
+      { data && <Graph /> }
+    </>
   )
 }
 
