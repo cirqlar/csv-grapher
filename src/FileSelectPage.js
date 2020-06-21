@@ -59,9 +59,8 @@ function FileSelectPage({ config: { parse, chart, shared }, updateConfig }) {
 }
 
 function mapStateToProps(state) {
-  let { file, config } = state;
+  let { config } = state;
   return {
-    file,
     config,
   }
 }

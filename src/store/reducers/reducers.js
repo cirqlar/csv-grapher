@@ -1,11 +1,11 @@
 import { UPDATE_CONFIG } from "../actions/actions";
 import { isEmpty } from '../../shared/csv';
 
-export function file(state = null, { type, payload: { file, changed } = {} }) {
+export function data(state = null, { type, payload: { data, changed } = {} }) {
   switch (type) {
     case UPDATE_CONFIG:
       if (changed) {
-        return file ?? null;
+        return data ?? null;
       }   
     // eslint-disable-next-line no-fallthrough
     default:

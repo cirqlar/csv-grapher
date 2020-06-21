@@ -16,11 +16,11 @@ export function updateConfig(payload) {
       if (file) {
         return parse(file, config)
           .then(result => {
-            action.payload.file = result;
+            action.payload.data = result;
             return dispatch(action);
           });
       }
-      action.payload.file = null;
+      action.payload.data = null;
       return dispatch(action);
     }
     return dispatch(action);
