@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { updateConfig } from './store/actions/actions'
+import { updateConfig } from '../store/actions/actions'
 
 
-function FileSelectPage({ config: { parse, chart, shared }, updateConfig }) {
+function FileSelector({ config: { parse, chart, shared }, updateConfig }) {
   const fileInput = React.useRef();
 
   const [header, setHeader] = React.useState(shared.header);
@@ -54,6 +54,7 @@ function FileSelectPage({ config: { parse, chart, shared }, updateConfig }) {
         onChange={() => { setFile(fileInput.current.files[0]); setChanged(true) } }
       />
       <button type="submit" >Submit</button>
+      <button onClick={() => updateConfig({ changed: true, file: null })}>Clear Data</button>
     </form>
 	);
 }
@@ -70,4 +71,4 @@ export default connect(
   {
     updateConfig,
   },
-)(FileSelectPage);
+)(FileSelector);

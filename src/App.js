@@ -1,20 +1,16 @@
 import React from 'react';
+import { useSelector, shallowEqual } from 'react-redux';
 
-import FileSelectPage from "./FileSelectPage";
-import GraphPage from './graph/GraphPage';
-import { useCSVParser } from './shared/csv';
+import FileSelector from "./fileSelector/FileSelector";
+import Graph from './graph/Graph';
 
 function App() {
-  const [data, setData] = useCSVParser();
-
-  React.useEffect(() => {
-    console.log(data);
-  }, [data]);
+  const data = useSelector((state) => state.data, shallowEqual);
 
   return (
     <>
-      <FileSelectPage submit={setData} />
-      { data && <GraphPage data={data} clearData={() => setData()} /> }
+      <FileSelector />
+      { data && <Graph /> }
     </>
   )
 }

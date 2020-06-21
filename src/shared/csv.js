@@ -59,6 +59,7 @@ export async function parse(file, config) {
   return formattedResults;
 }
 
+// Unused in favour of redux, but kept for reference
 export function useCSVParser() {
   console.log("Called");
   const [config, setConfig] = React.useState();
