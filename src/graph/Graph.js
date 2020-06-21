@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector, shallowEqual } from 'react-redux';
 import Chart from 'chart.js';
 
 let color = ["blue", "green", "grey", "orange", "purple", "red", "yellow"];
@@ -11,8 +12,6 @@ let colors = {
   red: "rgb(255, 99, 132)",
   yellow: "rgb(255, 205, 86)",
 }
-
-
 
 function createChart(ctx, data) {
   let graph = new Chart(ctx, {
@@ -33,11 +32,12 @@ function createChart(ctx, data) {
   return graph  
 }
 
-function Graph(props) {
+function Graph() {
   let canvas = React.useRef();
+  let { data, config } = useSelector(state => state, shallowEqual);
 
   React.useEffect(() => {
-    let graph = createChart(canvas.current.getContext('2d'), props.data);
+    let graph = createChart(canvas.current.getContext('2d'), data, config);
     return () => graph.destroy();
   })
 
