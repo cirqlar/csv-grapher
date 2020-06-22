@@ -1,7 +1,7 @@
 .container {
     width: 100%;
     transition: 0.5s;
-    height: 100%;
+    min-height: 100%;
 
     display: flex;
     flex-direction: column;
@@ -10,13 +10,13 @@
 }
 
 .containerClosed {
-    height: 180px;
-    
+    min-height: 180px;
+    padding: 16px 0;
 }
 @media screen and (min-width: 500px) {
     .containerClosed {
         flex-direction: row;
-        height: 120px;
+        min-height: 120px;
     }
 }
 
@@ -34,10 +34,34 @@
     padding: 0 32px;
     margin-bottom: 16px;
 }
+
+.containerClosed h1 br {
+    display: none;
+}
 @media screen and (min-width: 500px) {
     .containerClosed h1 {
         margin: 0;
+        text-align: left;
     }
+    .containerClosed h1 br {
+        display: initial;
+    }
+}
+
+.container h1 small {
+    font-size: 70%;
+    font-weight: 300;
+}
+
+.container h1 small a, .container h1 small a:visited {
+    text-decoration: none;
+    color: rgb(75, 192, 192);
+}
+
+.container h1 small a:hover,
+.container h1 small a:focus,
+.container h1 small a:active {
+    color: rgb(50, 126, 126);
 }
 
 .form {
@@ -74,13 +98,30 @@
     }
 }
 
-.checkbox {
-    padding: 10px 16px 10px 0;
-    display: inline-block;
+.config {
+    grid-column: 1 / -1;
+    padding: 12px 50px 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.checkbox input[type='checkbox'] {
+.config input[type='checkbox'] {
+    display: none;
+}
 
+.checkbox {
+    padding: .8em 1em;
+    margin: 0 8px;
+    border-radius: 5px;
+    background-color: #eeeeee;
+    color: rgb(59, 59, 59);
+    font-size: .8em;
+}
+.config input[type='checkbox']:checked + .checkbox {
+    background-color: rgb(75, 192, 192);
+    color: white;
 }
 
 .buttonForm {

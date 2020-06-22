@@ -40,7 +40,11 @@ function FileSelector({ data, config: { parse, chart, shared }, updateConfig }) 
 
 	return (
     <div className={styles.container + " " + ((!data) ? "" : styles.containerClosed)}>
-      <h1>CSV Grapher</h1>
+      <h1>
+        CSV Grapher
+        {" "}<br />
+        <small>by <a href="http://www.github.com/cirqlar">cirqlar</a></small>
+      </h1>
       <form onSubmit={e => {
         e.preventDefault();
         handleSubmit();
@@ -60,22 +64,26 @@ function FileSelector({ data, config: { parse, chart, shared }, updateConfig }) 
           style={{ display: "none" }}
           onChange={() => { setFile(fileInput.current.files[0]); setChanged(true) } }
         />
-        <label htmlFor="header" className={styles.checkbox}>Header
-          <input
-            type="checkbox"
-            id="header"
-            checked={header}
-            onChange={e => { setHeader(e.target.checked); setChanged(true) }}
-          />
-        </label>
-        <label htmlFor="labels" className={styles.checkbox}>Labels
-          <input
-            type="checkbox"
-            id="labels"
-            checked={labels}
-            onChange={e => { setLabels(e.target.checked); setChanged(true) }}
-          />
-        </label>
+        <div className={styles.config}>
+          {/* <div className={styles.checkbox}> */}
+            <input
+              type="checkbox"
+              id="header"
+              checked={header}
+              onChange={e => { setHeader(e.target.checked); setChanged(true) }}
+            />
+            <label htmlFor="header" className={styles.checkbox}>Header</label>
+          {/* </div>
+          <div className={styles.checkbox}> */}
+            <input
+              type="checkbox"
+              id="labels"
+              checked={labels}
+              onChange={e => { setLabels(e.target.checked); setChanged(true) }}
+            />
+            <label htmlFor="labels" className={styles.checkbox}>Labels</label>
+          {/* </div> */}
+        </div>
         <button 
           type="submit" 
           className={`${styles.buttonForm} ${styles.buttonSubmit}`}
