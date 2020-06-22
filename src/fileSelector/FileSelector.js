@@ -20,6 +20,7 @@ function FileSelector({ data, config: { parse, chart, shared }, updateConfig }) 
   const [header, setHeader] = React.useState(shared.header);
   const [labels, setLabels] = React.useState(shared.labels);
   const [changed, setChanged] = React.useState(false);
+  const [type, setType] = React.useState(chart.type);
   const [file, setFile] = React.useState();
 
   const handleSubmit = () => {
@@ -64,25 +65,31 @@ function FileSelector({ data, config: { parse, chart, shared }, updateConfig }) 
           style={{ display: "none" }}
           onChange={() => { setFile(fileInput.current.files[0]); setChanged(true) } }
         />
+        <select
+          className={styles.dropdown}
+          name="type"
+          value={type}
+          onChange={(e) => { setType(e.target.value); setChanged(true) }}
+        >
+          <option value="line">Line</option>
+          <option value="scatter">Scatter</option>
+          <option value="bar">Bar</option>
+        </select>
         <div className={styles.config}>
-          {/* <div className={styles.checkbox}> */}
-            <input
-              type="checkbox"
-              id="header"
-              checked={header}
-              onChange={e => { setHeader(e.target.checked); setChanged(true) }}
-            />
-            <label htmlFor="header" className={styles.checkbox}>Header</label>
-          {/* </div>
-          <div className={styles.checkbox}> */}
-            <input
-              type="checkbox"
-              id="labels"
-              checked={labels}
-              onChange={e => { setLabels(e.target.checked); setChanged(true) }}
-            />
-            <label htmlFor="labels" className={styles.checkbox}>Labels</label>
-          {/* </div> */}
+          <input
+            type="checkbox"
+            id="header"
+            checked={header}
+            onChange={e => { setHeader(e.target.checked); setChanged(true) }}
+          />
+          <label htmlFor="header" className={styles.checkbox}>Header</label>
+          <input
+            type="checkbox"
+            id="labels"
+            checked={labels}
+            onChange={e => { setLabels(e.target.checked); setChanged(true) }}
+          />
+          <label htmlFor="labels" className={styles.checkbox}>Labels</label>
         </div>
         <button 
           type="submit" 
