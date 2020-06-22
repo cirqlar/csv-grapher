@@ -58,7 +58,6 @@ function FileSelector({ data, config: { parse, chart, shared }, updateConfig }) 
           ref={fileInput} 
           accept=".csv,.txt" 
           style={{ display: "none" }}
-          onClick={() => console.log("File clicked") }
           onChange={() => { setFile(fileInput.current.files[0]); setChanged(true) } }
         />
         <label htmlFor="header" className={styles.checkbox}>Header
@@ -77,12 +76,19 @@ function FileSelector({ data, config: { parse, chart, shared }, updateConfig }) 
             onChange={e => { setLabels(e.target.checked); setChanged(true) }}
           />
         </label>
-        <button type="submit" className={`${styles.buttonForm} ${styles.buttonSubmit}`}>Submit</button>
         <button 
+          type="submit" 
+          className={`${styles.buttonForm} ${styles.buttonSubmit}`}
+          disabled={(!file || !changed)}
+        >Submit</button>
+        <button 
+          type="reset"
           onClick={() => {
             form.current.reset();
+            setFile();
             updateConfig({ changed: true, file: null });
           }}
+          disabled={(!data && !file)}
           className={`${styles.buttonForm} ${styles.buttonClear}`}
         >Clear</button>
       </form>
