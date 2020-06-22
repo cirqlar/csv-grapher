@@ -28,10 +28,13 @@ function FileSelector({ data, config: { parse, chart, shared }, updateConfig }) 
       file,
       changed,
       config: {
+        chart: {
+          type,
+        },
         shared: {
           header,
           labels,
-        }        
+        }  
       }
     }
     updateConfig(payload);
